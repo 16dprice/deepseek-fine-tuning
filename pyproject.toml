@@ -1,0 +1,71 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "fine-tuning"
+dynamic = ["version"]
+description = ''
+readme = "README.md"
+requires-python = ">=3.8"
+license = "MIT"
+keywords = []
+authors = [
+  { name = "dj", email = "djpric91@gmail.com" },
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Programming Language :: Python",
+  "Programming Language :: Python :: 3.8",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: Implementation :: CPython",
+  "Programming Language :: Python :: Implementation :: PyPy",
+]
+dependencies = [
+  "ipykernel",
+  "python-dotenv",
+  "openai==1.63.0",
+  "argilla>=2.7.0",
+  "torch==2.5.0",
+  "xformers==0.0.28.post2",
+  "unsloth[cu124-torch250] @ git+https://github.com/unslothai/unsloth.git"
+]
+
+[project.urls]
+Documentation = "https://github.com/dj/fine-tuning#readme"
+Issues = "https://github.com/dj/fine-tuning/issues"
+Source = "https://github.com/dj/fine-tuning"
+
+[tool.hatch.version]
+path = "src/fine_tuning/__about__.py"
+
+[tool.hatch.envs.types]
+extra-dependencies = [
+  "mypy>=1.0.0",
+]
+[tool.hatch.envs.types.scripts]
+check = "mypy --install-types --non-interactive {args:src/fine_tuning tests}"
+[tool.hatch.metadata]
+allow-direct-references = true
+
+[tool.coverage.run]
+source_pkgs = ["fine_tuning", "tests"]
+branch = true
+parallel = true
+omit = [
+  "src/fine_tuning/__about__.py",
+]
+
+[tool.coverage.paths]
+fine_tuning = ["src/fine_tuning", "*/fine-tuning/src/fine_tuning"]
+tests = ["tests", "*/fine-tuning/tests"]
+
+[tool.coverage.report]
+exclude_lines = [
+  "no cov",
+  "if __name__ == .__main__.:",
+  "if TYPE_CHECKING:",
+]
